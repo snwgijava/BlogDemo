@@ -21,3 +21,4 @@ requests==2.14.2
 requests-oauthlib==0.8.0
 six==1.10.0
 -e git+https://github.com/mariocesar/sorl-thumbnail.git@0928e1f09f2f3bf13dda5954b20838f21d29e13c#egg=sorl_thumbnail
+
