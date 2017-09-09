@@ -24,7 +24,7 @@ class IndexView(PaginationMixin,ListView):
    #指定获取的模型列表数据保存的变量名。这个变量会被传递给模板。
    context_object_name = 'post_list'
    # 指定 paginate_by 属性后开启分页功能，其值代表每一页包含多少篇文章
-   paginate_by = 1
+   paginate_by = 5
 
    #object = Post
 

@@ -1,168 +1,129 @@
 {% load staticfiles %}
 {% load blog_tags %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Black &amp; White</title>
-
-    <!-- meta -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- css -->
-    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
-
-    <!-- js -->
-    <script src="{% static 'blog/js/jquery-2.1.3.min.js' %}"></script>
-    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'blog/js/pace.min.js' %}"></script>
-    <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1">
+    <title>首页</title>
 </head>
 
+<!--        css         -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'blog/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'blog//css/base.css' %}">
+
+<!--     js        -->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="{% static 'blog//js/stickUp.min.js' %}"></script>
+
+
+
 <body>
-<div class="container">
-    <header id="site-header">
-        <div class="row">
-            <div class="col-md-4 col-sm-5 col-xs-8">
-                <div class="logo">
-                    <h1><a href="{% url 'blog:index' %}"><b>Black</b> &amp; White</a></h1>
-                </div>
-            </div><!-- col-md-4 -->
-            <div class="col-md-8 col-sm-7 col-xs-4">
-                <nav class="main-nav" role="navigation">
-                    <div class="navbar-header">
-                        <button type="button" id="trigger-overlay" class="navbar-toggle">
-                            <span class="ion-navicon"></span>
-                        </button>
-                    </div>
 
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
-                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="博客">博客</a></li>
-                            <li class="cl-effect-11"><a href="about.html" data-hover="关于">关于</a></li>
-                            <li class="cl-effect-11"><a href="contact.html" data-hover="联系">联系</a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </nav>
-                <div id="header-search-box">
-                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
-                    <div id="search-form" class="search-form">
-                        <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
-                            {% csrf_token %}
-                            <input type="search" name="q" placeholder="搜索" required>
-                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
-                        </form>
-                    </div>
-                </div>
-            </div><!-- col-md-8 -->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-bar" style="background-color: white">
+        <a class="navbar-brand" href="#" id="blog">Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="message()">分类</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="message()">归档</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="message()">留言板</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="message()">Search</button>
+            </form>
         </div>
-    </header>
-</div>
-<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
-<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
-
-<div class="content-body">
-    <div class="container">
-        <div class="row">
-            <main class="col-md-8">
-               {% block main %}
-                {% endblock %}
-            </main>
-            <aside class="col-md-4">
-               {% block toc %}
-            {% endblock toc %}
-                    <div class="widget widget-recent-posts">
-                    <h3 class="widget-title">最新文章</h3>
-                        {% get_recent_posts as recent_post_list %}
-                    <ul>
-                        {% for post in recent_post_list %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                        </li>
-                        {% empty %}
-                        暂无文章！
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="widget widget-archives">
-                    <h3 class="widget-title">归档</h3>
-                    {% archives as date_list %}
-                    <ul>
-                        {% for date in date_list %}
-                        <li>
-                            <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月 </a>
-                        </li>
-                        {% empty %}
-                        暂无归档！
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="widget widget-category">
-                    <h3 class="widget-title">分类</h3>
-                    {% get_categories as category_list %}
-                    <ul>
-                        {% for category in category_list %}
-                        <li>
-                            <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span class="post-count">({{ category.num_posts }})</span></a>
-                        </li>
-                        {% empty %}
-                        暂无分类！
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="widget widget-tag-cloud">
-                    <h3 class="widget-title">标签云</h3>
-                    {% get_tags as tags %}
-                    <ul>
-                        {% for tag in tags %}
-                        <li>
-                            <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}</a>
-                        </li>
-                        {% empty %}
-                        暂无归档！
-                        {% endfor %}
-                    </ul>
-                </div>
-
-
-            </aside>
-        </div>
-    </div>
-</div>
-<footer id="site-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="copyright">&copy 2017 - 采集自<a href="http://www.cssmoban.com/"
-                                                        target="_blank" title="模板之家">模板之家</a>
-                    - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Mobile Menu -->
-<div class="overlay overlay-hugeinc">
-    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
-    <nav>
-        <ul>
-            <li><a href="index.html">首页</a></li>
-            <li><a href="full-width.html">博客</a></li>
-            <li><a href="about.html">关于</a></li>
-            <li><a href="contact.html">联系</a></li>
-        </ul>
     </nav>
 </div>
 
-<script src="{% static 'blog/js/script.js' %}"></script>
+    <div class="header-banner banner">
+            <h1 class="title">人 生 苦 短 我 用 python </h1>
+    </div>
+<div class="container">
+
+    <div class="flex-left flex-wrap units-gap-big">
+
+        <main class="unit-3-4 unit-1-on-mobile top-gap">
+
+               {% block main %}
+                {% endblock %}
+
+        </main>
+
+    </div>
+
+    <div class="right-div">
+
+        <div class="card">
+            <div class="card-header card-color">
+                热门文章
+            </div>
+            {% get_recent_posts as recent_post_list %}
+            <div class="bg-white card-block">
+            <br>
+                 {% for post in recent_post_list %}
+                <blockquote class="card-blockquote">
+                   <ol>
+                       <li class="icon-angle-right">&nbsp;&nbsp;<a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                   </ol>
+                    {% empty %}
+                        暂无文章！
+                 {% endfor %}
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px">
+            <div class="card-header card-color">
+                标签云
+            </div>
+
+                <div class="card-body">
+                    {% get_tags as tags %}
+                    {% for tag in tags %}
+                    <a href="{% url 'blog:tag' tag.pk %}" class="btn btn-sm tags-a">{{ tag.name }}</a>
+                     {% empty %}
+                        暂无标签！
+                   {% endfor %}
+                </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div id="footer" class="page-bottom">
+
+    <p class="text-center"><span>博客总访问量：</span><span>50</span>&nbsp;&nbsp;<span>今日访问量：</span><span>2</span></p>
+
+    <div class="copyright" style="background-color: #1ABC9C">
+        <span class="text-center">欢迎来到我的博客 © 2017</span>
+    </div>
+
+</div>
 
 </body>
+
+<script>
+    function message() {
+        alert("尚未开放！")
+    }
+</script>
+
+
 </html>

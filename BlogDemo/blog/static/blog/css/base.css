@@ -1,0 +1,92 @@
+.header-banner{
+    min-height: 300px;
+    text-align: center;
+    min-height: 257px;
+    position: relative;
+    background-color: turquoise;
+
+}
+
+.nav-bar {
+    height: 60px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.banner{
+
+    height: 200px;
+    background: -webkit-linear-gradient(left, #2ECC71 , #16A085); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #2ECC71 , #16A085); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #2ECC71 , #16A085); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #2ECC71 , #16A085); /* 标准的语法（必须放在最后） */
+    padding-top: 120px;
+}
+
+.card-color{
+    background-color: #fff !important;
+}
+
+body{
+    background-color: #eee;
+}
+
+.top-gap {
+    margin-top: 15px!important;
+    float: left;
+    width: 70%;
+}
+
+.right-div{
+    margin-top: 15px;
+    float: right;
+    width: 28%;
+}
+
+
+.page-bottom {
+    width: 100%;
+    clear: both;
+    background: #e7e7e7;
+    margin-top: 2.5em;
+    padding: 1em 0 0;
+    color: #777;
+}
+
+.copyright{
+    text-align: center;
+    padding: 0.5em 0;
+    margin-top: 1.5em;
+    color: white;
+}
+
+.tags-a{
+    background-color: white;
+    margin-left: 10px;
+    border-color: #BDC3C7;
+    background: -webkit-linear-gradient(left, #2ECC71 , #2980B9);     /* 背景色渐变 */
+    -webkit-background-clip: text;         /* 规定背景的划分区域 */
+    -webkit-text-fill-color: transparent;  /* 防止字体颜色覆盖 */
+}
+
+.icon-dingwei{
+    position:absolute;
+    z-index: 2;
+    top: 700px;
+    left: 1500px;
+    float: inherit;
+}
+
+.title{
+    color: white;
+    font-family: 微软雅黑;
+}
+
+.units-gap-big{
+    margin-top: 10px;background-color: #fff;
+}
+
+
