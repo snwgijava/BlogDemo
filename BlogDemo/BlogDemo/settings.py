@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'pure_pagination',  #分页
+    'simditor',  #富文本编辑器
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-print(BASE_DIR)
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+#富文本编辑器
+SIMDITOR_UPLOAD_PATH = 'uploads/'
+SIMDITOR_IMAGE_BACKEND = 'pillow'
+
+SIMDITOR_TOOLBAR = [
+    'title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale',
+    'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link',
+    'image', 'hr', '|', 'indent', 'outdent', 'alignment', 'fullscreen',
+    'markdown'
+]
+
+SIMDITOR_CONFIGS = {
+     ' toolbar ':SIMDITOR_TOOLBAR,
+     ' upload ':{
+         ' url ':' / simditor / upload / ',
+         ' fileKey ':' upload '
+    }
+}
 

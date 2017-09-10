@@ -22,6 +22,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include('blog.urls')),
+    url(r'^simditor/', include('simditor.urls')) #富文件本编辑器 上传图片
 
 ]
 

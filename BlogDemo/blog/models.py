@@ -7,6 +7,8 @@ from django.utils.six import python_2_unicode_compatible
 from django.urls import reverse
 from django.utils.html import strip_tags
 
+from simditor.fields import RichTextField
+
 import markdown
 
 # Create your models here.
@@ -33,7 +35,7 @@ class Tag(models.Model):
 #文章
 class Post(models.Model):
 	title = models.CharField(max_length=80,verbose_name='文章标题')
-	body = models.TextField(verbose_name='文章正文')
+	body = RichTextField(verbose_name='文章正文')	#富文本编辑器
 	#创建时间
 	created_time = models.DateTimeField(verbose_name='创建时间')
 	#最后一次修改时间

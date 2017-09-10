@@ -22,7 +22,7 @@
                             <ul>
                                 标签：
                                 {% for tag in post.tags.all %}
-                                    <li class="btn btn-sm tags-a"><a href="{% url 'blog:tag' tag.pk %}"># {{ tag.name }}</a></li>
+                                    <li class="btn btn-sm tags-a"><a href="{% url 'blog:tag' tag.pk %}"><span class="icon-tag">&nbsp;</span>{{ tag.name }}</a></li>
                                 {% endfor  %}
                             </ul>
                         </div>
