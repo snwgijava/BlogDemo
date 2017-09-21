@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}归档 -- 杨剑的博客{% endblock %}
+
+
+{% block main %}
+    {% regroup post_list by created_time.year as year_post_group %}
+    <ul>
+        {% for year in year_post_group %}
+            <li>{{ year.grouper }}年{% regroup year.list by created_time.month as month_post_group %}
+            <ul>
+                {% for month in month_post_group %}
+                    <li>{{ month.grouper }}月
+                        <ul>
+                            {% for post in month.list %}
+                                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> </li>
+                                {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+            </ul>
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

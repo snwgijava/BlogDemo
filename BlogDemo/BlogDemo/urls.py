@@ -22,7 +22,11 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include('blog.urls')),
-    url(r'^simditor/', include('simditor.urls')) #富文件本编辑器 上传图片
+    url(r'^simditor/', include('simditor.urls')), #富文件本编辑器 上传图片
+    # url(r'^users/',include('users.urls')), #用户信息
+    #这里是Django自带的登录注册
+    # url(r'^users/', include('django.contrib.auth.urls')),  # 将 auth 应用中的 urls 模块包含进来
+    url(r'^accounts/', include('allauth.urls')),
 
 ]
 

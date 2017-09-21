@@ -20,6 +20,16 @@ def get_recent_posts(num=5):
 
 
 @register.simple_tag
+def get_hot_article(num=5):
+    '''
+    点击量最高的文章
+    :param num:
+    :return:
+    '''
+    return Post.objects.all().order_by('-views')[:num]
+
+
+@register.simple_tag
 def archives():
     '''
     归档模板标签,dates 方法会返回一个列表，列表中的元素为每一篇文章（Post）的创建时间，且是 Python 的 date 对象，精确到月份，降序排列
@@ -34,6 +44,7 @@ def get_categories():
     分类模板标签
     :return: 
     '''
+    # Count 计算分类下的文章数，其接受的参数为需要计数的模型的名称
     return Category.objects.annotate(num_posts=Count('post'))
 
 
@@ -46,3 +57,4 @@ def get_tags():
     获取到文章数大于 0 的标签列表
     '''
     return Tag.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
+

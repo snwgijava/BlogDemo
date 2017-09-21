@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" content="width=device-width, initial-scale=1">
-    <title>杨剑的博客</title>
+    <title>{% block title %}杨剑的博客{% endblock %}</title>
 </head>
 
 <!--        css         -->
@@ -37,19 +37,22 @@
                     <a class="nav-link" href="{% url 'blog:index' %}">主页 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="message()">分类</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="message()">归档</a>
+                    <a class="nav-link" href="{% url 'blog:archives' %}">归档</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="message()">留言板</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="message()">关于</a>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="尚未开放">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="message()">搜索</button>
+            <form class="form-inline my-2 my-lg-0" action="{% url 'blog:index' %}">
+                <input class="form-control mr-sm-2" type="search" name="q" placeholder="请输入文章标题">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
             </form>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+{#            <a href="{% url 'login' %}" class="icon-user"></a>#}
+{#            <a href="{% url 'logout' %}" class="icon-signout"></a>#}
         </div>
     </nav>
 </div>
@@ -71,17 +74,18 @@
     </div>
 
     <div class="right-div">
-
+    {% block right_div %}
+        {% block recommend %}
         <div class="card">
             <div class="card-header card-color">
                 热门文章
             </div>
-            {% get_recent_posts as recent_post_list %}
+            {% get_hot_article as recent_post_list %}
             <div class="bg-white card-block">
                 <br>
                 {% for post in recent_post_list %}
                     <ol>
-                        <li class="icon-thumbs-up">&nbsp;&nbsp;<a style="font-size: 15px"
+                        <li class="icon-hand-right">&nbsp;&nbsp;<a style="font-size: 15px"
                                 href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
                     </ol>
                 {% empty %}
@@ -90,7 +94,26 @@
 
             </div>
         </div>
+    {% endblock %}
 
+         <div class="card" style="margin-top: 20px">
+            <div class="card-header card-color">
+                文章分类
+            </div>
+            <div class="bg-white card-block">
+                <br>
+                {% get_categories as category_list %}
+                {% for category in category_list %}
+                    <ol>
+                        <li class="icon-folder-open-alt">&nbsp;&nbsp;<a style="font-size: 15px"
+                                href="{% url 'blog:category' category.pk %}">{{ category.name }}<span class="badge" style="color: #2980B9">（{{ category.num_posts }}）</span></a></li>
+                    </ol>
+                {% empty %}
+                    暂无分类！
+                {% endfor %}
+
+            </div>
+        </div>
         <div class="card" style="margin-top: 20px">
             <div class="card-header card-color">
                 标签云
@@ -106,6 +129,7 @@
             </div>
 
         </div>
+    {% endblock %}
     </div>
 
 </div>

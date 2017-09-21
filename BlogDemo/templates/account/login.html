@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}用户登录{% endblock %}
+
+{% block main %}
+    <form class="" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <a class="text-muted" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+        <button class="button button-primary button-rounded button-small" type="submit">{% trans "Sign In" %}</button>
+    </form>
+{% endblock %}
+
+{% block right_div %}
+
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <p>这里是第三方登录</p>
+
+        <div class="socialaccount_ballot">
+
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+
+        </div>
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+        <p>{% blocktrans %}If you have not created an account yet, then please
+            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    {% endif %}
+{% endblock %}

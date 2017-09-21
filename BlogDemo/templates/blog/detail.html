@@ -1,4 +1,7 @@
 {% extends 'blog/base.html' %}
+{% load blog_tags %}
+
+{% block title %}{{ post.title }}{% endblock %}
 {% block main %}
 
                 <article class="flex-left list-group-item post-item px-7">
@@ -10,7 +13,7 @@
                         <li class="list-inline-item text-small text-muted">0 字
                         </li>
                         <li class="list-inline-item text-small text-muted">
-                            0 阅读
+                            {{ post.views }} 阅读
                         </li>
                         <li class="list-inline-item text-small text-muted">
                             0 评论
@@ -24,16 +27,34 @@
                                 {% for tag in post.tags.all %}
                                     <li class="btn btn-sm tags-a"><a href="{% url 'blog:tag' tag.pk %}"><span class="icon-tag">&nbsp;</span>{{ tag.name }}</a></li>
                                 {% endfor  %}
+
                             </ul>
                         </div>
                     </div>
                 </article>
 
-
-
 {% endblock main %}
-{% block toc %}
-{% endblock toc %}
+{% block recommend %}
+    <div class="card">
+            <div class="card-header card-color">
+                热门文章
+            </div>
+            {% get_hot_article as recent_post_list %}
+            <div class="bg-white card-block">
+                <br>
+                {% for post in recent_post_list %}
+                    <ol>
+                        <li class="icon-hand-right">&nbsp;&nbsp;<a style="font-size: 15px"
+                                href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                    </ol>
+                {% empty %}
+                    暂无文章！
+                {% endfor %}
+
+            </div>
+
+        </div>
+{% endblock recommend %}
 
 <div class="rss">
     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>

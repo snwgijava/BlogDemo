@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load blog_tags %}
+
+{% block title %}首页 -- 杨剑的博客{% endblock %}
 {% block main %}
 
     {% if error_msg %}
@@ -21,7 +23,7 @@
                                     <span class="text-small text-faded" datetime="{{ post.created_time }}">{{ post.created_time }}&nbsp;&nbsp;</span>
                             </li>
                             <li class="list-inline-item icon-eye-open">
-                                    <span class="text-small text-faded">点击量：50&nbsp;&nbsp;</span>
+                                    <span class="text-small text-faded">点击量：{{ post.views }}&nbsp;&nbsp;</span>
                             </li>
                             <li class="list-inline-item icon-comment">
                                     <span class="text-small text-faded" >评论：2</span>
@@ -36,7 +38,6 @@
                             <span class="badge badge-pill badge-success icon-folder-open-alt">&nbsp;{{ post.category.name }}</span>
 
                         </div>
-
 
                     </div>
 

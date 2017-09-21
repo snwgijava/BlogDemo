@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.1','locahost','.ybyangj.cn']
 
 
 INSTALLED_APPS = [
+    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,15 @@ INSTALLED_APPS = [
     'blog',
     'pure_pagination',  #分页
     'simditor',  #富文本编辑器
+    #第三方登录相关
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+# 下面是第三方账号相关的，比如我选了weibo和github
+    'allauth.socialaccount.providers.weibo',
+    'allauth.socialaccount.providers.github',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'BlogDemo.urls'
 
@@ -106,11 +118,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# django-allauth相关设置
+AUTHENTICATION_BACKENDS = (
+# django admin所使用的用户登录与django-allauth无关
+    'django.contrib.auth.backends.ModelBackend',
 
+# `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
+# 前面我们app里添加了django.contrib.sites,需要设置SITE_ID
+SITE_ID = 1
+#ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  的作用是当用户登录时，既可以使用用户名也可以使用email， 其他可选的值是 "username"、"email"
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+#ACCOUNT_EMAIL_REQUIRED = True  要求用户注册时必须填写email，默认False，emial是选填的。
+ACCOUNT_EMAIL_REQUIRED = True
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
+#设置用户登录和注销跳转为首页，这里是没有记录用户在页面上点击登录或注销时使用的
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+#发送邮件
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '809127232@qq.com'
+EMAIL_HOST_PASSWORD = 'ddvgvtwnicvlbedb'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = '809127232@qq.com'
 
 
 LANGUAGE_CODE = 'zh-hans'
@@ -130,6 +169,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+
 
 #富文本编辑器
 SIMDITOR_UPLOAD_PATH = 'uploads/'

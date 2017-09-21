@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.db.models.aggregates import Count
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,View
 
 from .models import Post,Category,Tag
 
@@ -14,8 +14,8 @@ import markdown
 class IndexView(PaginationMixin,ListView):
    '''
    获得文章列表
-   :param request: 
-   :return: 
+   :param request:
+   :return:
    '''
    #将 model 指定为 Post，告诉 Django 我要获取的模型是 Post
    model = Post
@@ -26,32 +26,38 @@ class IndexView(PaginationMixin,ListView):
    # 指定 paginate_by 属性后开启分页功能，其值代表每一页包含多少篇文章
    paginate_by = 5
 
-   #object = Post
+    #在ListView中做查询结果分页
+   def get_queryset(self):
+       if 'q' in self.request.GET:
+           return Post.objects.filter(title__icontains=self.request.GET['q'])
+       return super(IndexView, self).get_queryset()
+
+   # # #object = Post
 
 
-def index(request):
-    post_list = Post.objects.all()
-    return render(request, 'blog/index.html', context={'post_list': post_list})
+# def index(request):
+#     post_list = Post.objects.all()
+#     return render(request, 'blog/index.html', context={'post_list': post_list})
 
 
 #详情页
-def detail(request,pk):
-   '''
-   取得页面传递的文章id，然后取得文章的详细信息
-   :param request: 
-   :param pk: 
-   :return: 
-   '''
-   post = get_object_or_404(Post,pk=pk)
-   #阅读量+1
-   post.increase_views()
-
-   post.body = markdown.markdown(post.body,extensions=[
-      'markdown.extensions.extra',
-      'markdown.extensions.codehilite',
-      'markdown.extensions.toc',
-                     ])
-   return render(request,'blog/detail.html',context={'post':post})
+# def detail(request,pk):
+#    '''
+#    取得页面传递的文章id，然后取得文章的详细信息
+#    :param request:
+#    :param pk:
+#    :return:
+#    '''
+#    post = get_object_or_404(Post,pk=pk)
+#    #阅读量+1
+#    post.increase_views()
+#
+#    post.body = markdown.markdown(post.body,extensions=[
+#       'markdown.extensions.extra',
+#       'markdown.extensions.codehilite',
+#       'markdown.extensions.toc',
+#                      ])
+#    return render(request,'blog/detail.html',context={'post':post})
 
 
 class PostDetailView(DetailView):
@@ -69,9 +75,14 @@ class PostDetailView(DetailView):
         # 将文章阅读量 +1
         # 注意 self.object 的值就是被访问的文章 post
         self.object.increase_views()
-
         #视图必须返回一个 HttpResponse 对象
         return response
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+
+        context['post_list'] = Category.objects.all()
+        return context
 
     def get_object(self, queryset=None):
         # 覆写 get_object 方法的目的是因为需要对 post 的 body 值进行渲染
@@ -98,15 +109,16 @@ def archives(request,year,month):
    return render(request,'blog/index.html',{'post_list':post_list})
 
 
+#归档
 class ArchivewView(ListView):
     model = Post
-    template_name = 'blog/index.html'
+    template_name = 'blog/archives.html'
     context_object_name = 'post_list'
 
-    def get_queryset(self):
-        year = self.kwargs.get('year')
-        month = self.kwargs.get('month')
-        return super(ArchivewView,self).get_queryset().filter(created_time__year=year,created_time__month=month)
+    # def get_queryset(self):
+    #     year = self.kwargs.get('year')
+    #     month = self.kwargs.get('month')
+    #     return super(ArchivewView,self).get_queryset().filter(created_time__year=year,created_time__month=month)
 
 
 #分类
@@ -125,6 +137,10 @@ class CategoryView(IndexView):
    紧接着就对返回的结果调用了 filter 方法来筛选该分类下的全部文章并返回
    因为CategoryView类中指定的属性值和 IndexView 中是一模一样的，可以直接继承IndexView
    '''
+   model = Post
+   template_name = 'blog/index.html'
+   context_object_name = 'post_list'
+
    def get_queryset(self):
        cate = get_object_or_404(Category,pk=self.kwargs.get('pk'))
        return super(CategoryView,self).get_queryset().filter(category=cate)
