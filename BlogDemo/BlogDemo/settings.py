@@ -49,10 +49,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-# 下面是第三方账号相关的，比如我选了weibo和github
-    'allauth.socialaccount.providers.weibo',
+# 下面是第三方账号相关的weibo和github和微信
     'allauth.socialaccount.providers.github',
-    'crispy_forms',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [

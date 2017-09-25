@@ -50,7 +50,7 @@ body{
     width: 100%;
     clear: both;
     background: #e7e7e7;
-    margin-top: 2.5em;
+    margin-top: 2em;
     padding: 1em 0 0;
     color: #777;
 }
@@ -62,14 +62,6 @@ body{
     color: white;
 }
 
-
-.icon-dingwei{
-    position:absolute;
-    z-index: 2;
-    top: 700px;
-    left: 1500px;
-    float: inherit;
-}
 
 .title{
     color: white;

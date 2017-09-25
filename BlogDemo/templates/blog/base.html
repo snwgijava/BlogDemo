@@ -18,7 +18,7 @@
 <!--     js        -->
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<script src="{% static 'blog/js/stickUp.min.js' %}"></script>
+{#<script src="{% static 'blog/js/stickUp.min.js' %}"></script>#}
 
 
 <body>
@@ -75,7 +75,6 @@
 
     <div class="right-div">
     {% block right_div %}
-        {% block recommend %}
         <div class="card">
             <div class="card-header card-color">
                 热门文章
@@ -94,7 +93,7 @@
 
             </div>
         </div>
-    {% endblock %}
+
 
          <div class="card" style="margin-top: 20px">
             <div class="card-header card-color">
@@ -134,16 +133,15 @@
 
 </div>
 
-<div id="footer" class="page-bottom">
-
-    <p class="text-center"><span>博客总访问量：</span><span>50</span>&nbsp;&nbsp;<span>今日访问量：</span><span>2</span></p>
-
+{% block footer %}
+<footer id="footer" class="page-bottom bs-docs-footer">
+    <p class="text-center"><span>博客总访问量：</span><span></span>&nbsp;&nbsp;<span>今日访问量：</span><span></span></p>
     <div class="copyright" style="background-color: #1ABC9C">
         <span class="text-center">欢迎来到我的博客 © 2017</span>
     </div>
+</footer>
 
-</div>
-
+{% endblock %}
 </body>
 
 <script>

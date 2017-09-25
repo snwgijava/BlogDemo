@@ -4,59 +4,90 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block main %}
 
-                <article class="flex-left list-group-item post-item px-7">
-                    <h1 class="top-gap-0">{{ post.title }}</h1>
-                    <ul class="list-inline dot-divider post-meta">
-                        <li class="list-inline-item text-small text-muted">
-                            {{ post.created_time }}
-                        </li>
-                        <li class="list-inline-item text-small text-muted">0 字
-                        </li>
-                        <li class="list-inline-item text-small text-muted">
-                            {{ post.views }} 阅读
-                        </li>
-                        <li class="list-inline-item text-small text-muted">
-                            0 评论
-                        </li>
-                    </ul>
-                    <div class="top-gap-big post-body">
-                        {{ post.body|safe }}
-                         <div class="widget-tag-cloud">
-                            <ul>
-                                标签：
-                                {% for tag in post.tags.all %}
-                                    <li class="btn btn-sm tags-a"><a href="{% url 'blog:tag' tag.pk %}"><span class="icon-tag">&nbsp;</span>{{ tag.name }}</a></li>
-                                {% endfor  %}
+    <article class="flex-left list-group-item post-item px-7">
+        <h1 class="top-gap-0">{{ post.title }}</h1>
+        <ul class="list-inline dot-divider post-meta">
+            <li class="list-inline-item text-small text-muted">
+                {{ post.created_time }}
+            </li>
+            <li class="list-inline-item text-small text-muted">0 字
+            </li>
+            <li class="list-inline-item text-small text-muted">
+                {{ post.views }} 阅读
+            </li>
+            <li class="list-inline-item text-small text-muted">
+                <a href="#SOHUCS" id="changyan_count_unit"></a> 评论
+            </li>
+        </ul>
+        <div class="top-gap-big post-body">
+            {{ post.body|safe }}
+            <div class="widget-tag-cloud">
+                <ul>
+                    标签：
+                    {% for tag in post.tags.all %}
+                        <li class="btn btn-sm tags-a"><a href="{% url 'blog:tag' tag.pk %}"><span class="icon-tag">&nbsp;</span>{{ tag.name }}
+                        </a></li>
+                    {% endfor %}
 
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-
-{% endblock main %}
-{% block recommend %}
-    <div class="card">
-            <div class="card-header card-color">
-                热门文章
-            </div>
-            {% get_hot_article as recent_post_list %}
-            <div class="bg-white card-block">
-                <br>
-                {% for post in recent_post_list %}
-                    <ol>
-                        <li class="icon-hand-right">&nbsp;&nbsp;<a style="font-size: 15px"
-                                href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                    </ol>
-                {% empty %}
-                    暂无文章！
-                {% endfor %}
-
+                </ul>
             </div>
 
         </div>
-{% endblock recommend %}
+    <!-- 分享 -->
+        <div class="widget-tag-cloud">
+            <label>分享到：
+                <!-- JiaThis Button BEGIN -->
+                <div class="jiathis_style_24x24">
+                    <a class="jiathis_button_qzone"></a>
+                    <a class="jiathis_button_tsina"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_renren"></a>
+                    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis"
+                       target="_blank"></a>
+                    <a class="jiathis_counter_style"></a>
+                </div>
+            </label>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
 
-<div class="rss">
-    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
-</div>
+        <!-- 畅言评论 -->
+        <!--PC版-->
+        <div id="SOHUCS" sid="{{ post.id }}"></div>
+        <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+        <script type="text/javascript">
+            window.changyan.api.config({
+                appid: 'cytevA9pm',
+                conf: 'prod_e4815e22b190f4a8e80f9a58cc588925'
+            });
+        </script>
+    </article>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+{% endblock main %}
+{% block right_div %}
+    <div class="card">
+        <div class="card-header card-color">
+            热门文章
+        </div>
+        {% get_hot_article as recent_post_list %}
+        <div class="bg-white card-block">
+            <br>
+            {% for post in recent_post_list %}
+                <ol>
+                    <li class="icon-hand-right">&nbsp;&nbsp;<a style="font-size: 15px"
+                                                               href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </li>
+                </ol>
+            {% empty %}
+                暂无文章！
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
 </aside>

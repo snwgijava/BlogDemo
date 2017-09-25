@@ -1,45 +1,35 @@
-{% extends 'blog/base.html' %}
+{% extends 'account/base.html' %}
 
 {% load i18n %}
-{% load account socialaccount %}
-{% load crispy_forms_tags %}
+{% load bootstrap %}
 
 
 {% block title %}用户登录{% endblock %}
 
+
 {% block main %}
-    <form class="" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-        {% endif %}
-        <a class="text-muted" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-        <button class="button button-primary button-rounded button-small" type="submit">{% trans "Sign In" %}</button>
-    </form>
+
+    <div class="card">
+        <div class="bg-primary text-white text-center"><h6 style="color: white">登录</h6></div>
+        <form class="bg-white card-block" method="POST" action="{% url 'account_login' %}">
+            <div style="margin:20px 30px 0px 30px">
+            {% csrf_token %}
+            {{ form|bootstrap }}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            </div>
+        <button style="margin-left: 45px" class="button button-primary button-rounded button-small" type="submit">{% trans "Sign In" %}</button>
+
+        <div style="margin: 10px">
+            <a class="" style="margin-left: 25px;color: #3498DB" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            <a class="" style="margin-left: 500px;color: #3498DB" href="{% url 'account_signup' %}">新用户注册</a>
+        </div>
+        </form>
+
+    </div>
 {% endblock %}
 
-{% block right_div %}
 
-
-    {% get_providers as socialaccount_providers %}
-
-    {% if socialaccount_providers %}
-        <p>这里是第三方登录</p>
-
-        <div class="socialaccount_ballot">
-
-            <ul class="socialaccount_providers">
-                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-            </ul>
-
-
-        </div>
-
-        {% include "socialaccount/snippets/login_extra.html" %}
-
-    {% else %}
-        <p>{% blocktrans %}If you have not created an account yet, then please
-            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-    {% endif %}
+{% block footer %}
 {% endblock %}

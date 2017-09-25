@@ -3,7 +3,9 @@
 
 {% block title %}首页 -- 杨剑的博客{% endblock %}
 {% block main %}
-
+    <!-- 畅言评论相关 -->
+<script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytevA9pm">
+</script>
     {% if error_msg %}
         <p>{{ error_msg }}</p>
     {% endif %}
@@ -26,7 +28,7 @@
                                     <span class="text-small text-faded">点击量：{{ post.views }}&nbsp;&nbsp;</span>
                             </li>
                             <li class="list-inline-item icon-comment">
-                                    <span class="text-small text-faded" >评论：2</span>
+                                    评论：<span id = "sourceId::{{ post.id }}" class = "cy_cmt_count text-small text-faded" ></span>
                             </li>
                         </ul>
 

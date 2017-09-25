@@ -5,6 +5,7 @@
 
 {% block main %}
     {% regroup post_list by created_time.year as year_post_group %}
+    <div class="flex-left list-group-item post-item px-7">
     <ul>
         {% for year in year_post_group %}
             <li>{{ year.grouper }}年{% regroup year.list by created_time.month as month_post_group %}
@@ -23,4 +24,5 @@
             </li>
         {% endfor %}
     </ul>
+    </div>
 {% endblock %}

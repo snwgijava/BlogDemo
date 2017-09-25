@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% load socialaccount %}
+
+
+{% block main %}
+{% endblock %}
+
+{% block right_div %}
+    <div class="card">
+        <div class="bg-primary text-white text-center"><h6>第三方帐号登录</h6></div>
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+            <div style="margin:10px 30px 0px 30px">
+                {% for provider in socialaccount_providers %}
+                    <div class="social-provider">
+                    <a title="{{ provider.name }}" class="btn btn-outline-info btn-block h3 "
+                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                        <i class="icon-github">&nbsp;&nbsp;</i>
+                        {{ provider.name }}</a>
+                {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
